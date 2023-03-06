@@ -51,10 +51,46 @@ public class Apptests {
     public void t4() {
         String rs = AppTestRunner.run("");
 
-
         assertThat(rs)
                 .contains("올바르지 않은 명령입니다.");
-//앱 테스트 끝
-    }
 
+    }
+    @Test
+    @DisplayName("등록화면에서 명언과 작가를 입력고, 명언을 생성한다.")
+    public void t5() {
+        String rs = AppTestRunner.run("""
+                등록
+                현재를 사랑하라.
+                작자미상
+                """);
+
+        assertThat(rs)
+                .contains("명언: ")
+                .contains("작가: ")
+                .contains("1번 명언이 등록되었습니다.");
+
+    }
+    @Test
+    @DisplayName("등록화면에서 명언과 작가를 입력고, 명언을 생성한다.")
+    public void t6() {
+        String rs = AppTestRunner.run("""
+                등록
+                현재를 사랑하라.
+                작자미상
+                등록
+                나의 죽음을 적들에게 알리지 마라.
+                이순신
+                등록
+                왼손은 거들뿐
+                강백호
+                """);
+
+        assertThat(rs)
+                .contains("1번 명언이 등록되었습니다.")
+                .contains("2번 명언이 등록되었습니다.")
+                .contains("3번 명언이 등록되었습니다.")
+                .doesNotContain("4번 명언이 등록되었습니다.");
+
+    }
+//앱 테스트 끝
 }
